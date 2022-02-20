@@ -7,7 +7,7 @@
 # We override the terraform block source attribute here just for the QA environment to show how you would deploy a
 # different version of the module in a specific environment.
 terraform {
-  source = "${local.module_repository}/subscription?ref=demo"
+  source = "github.com/JinLee794/TerraBox-Modules.git//subscription?ref=demo"
 }
 
 include {
@@ -15,10 +15,10 @@ include {
 }
 
 locals {
-  module_repository = "git@github.com:JinLee794/TerraBox-Modules.git//TerraBox-Modules"
+  module_repository = "github.com/JinLee794/TerraBox-Modules"
 }
 
 inputs = {
   subscription_name = "ES-CE-LR-INT JINLE"
-  subscription_id = "7386cd39-b109-4cc6-bb80-bf12413d0a99"
+  subscription_id   = "7386cd39-b109-4cc6-bb80-bf12413d0a99"
 }

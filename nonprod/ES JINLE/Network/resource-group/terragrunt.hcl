@@ -8,7 +8,7 @@
 # different version of the module in a specific environment.
 terraform {
   # source = "${local.module_repository}//key-vault?ref=${local.module_repository_version}"
-  source = "${local.module_repository}//resource-group.git?ref=${local.module_repository_version}"
+  source = "${local.module_repository}//resource-group?ref=${local.module_repository_version}"
 }
 
 include {
@@ -16,12 +16,12 @@ include {
 }
 
 locals {
-  common_vars = read_terragrunt_config(find_in_parent_folders("common.hcl"))
-  module_repository = local.common_vars.locals.module_repository
+  common_vars               = read_terragrunt_config(find_in_parent_folders("common.hcl"))
+  module_repository         = local.common_vars.locals.module_repository
   module_repository_version = local.common_vars.locals.module_repository_version
 
-  env_vars  = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-  location          = local.env_vars.locals.location
+  env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  location = local.env_vars.locals.location
 
   env = get_env("ENV", "dev")
 }
