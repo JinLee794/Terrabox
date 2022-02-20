@@ -15,8 +15,8 @@ include {
 }
 
 locals {
-  common_vars = read_terragrunt_config(find_in_parent_folders("common.hcl"))
-  module_repository = local.common_vars.locals.module_repository 
+  common_vars               = read_terragrunt_config(find_in_parent_folders("common.hcl"))
+  module_repository         = local.common_vars.locals.module_repository
   module_repository_version = local.common_vars.locals.module_repository_version
 }
 

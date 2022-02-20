@@ -28,11 +28,11 @@ locals {
   backend_storage_account_name        = local.common_vars.locals.backend_storage_account_name
 
   # Extract the ENV value from the environment; default to dev
-  env = get_env("ENV", "dev")
+  env      = get_env("ENV", "dev")
   env_vars = read_terragrunt_config(find_in_parent_folders("${local.env}.hcl"))
 
   # Pull in Service Principal credentials from the environment
-  client_secret                       = get_env("ARM_CLIENT_SECRET")
+  client_secret = get_env("ARM_CLIENT_SECRET")
 }
 
 # Generate an Azure provider block
@@ -73,8 +73,8 @@ remote_state {
 # where terraform_remote_state data sources are placed directly into the modules.
 inputs = merge(
   local.common_vars.locals,
-  local.env_vars.locals
+  local.env_vars.locals,
   {
-    client_secret                       = local.client_secret
+    client_secret = local.client_secret
   }
 )
