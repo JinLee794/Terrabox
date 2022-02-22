@@ -20,12 +20,12 @@ locals {
   module_repository         = local.common_vars.locals.module_repository
   module_repository_version = local.common_vars.locals.module_repository_version
 
-  env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-  location = local.env_vars.locals.location
+  layer_vars               = read_terragrunt_config(find_in_parent_folders("layer.hcl"))
+  layer_name = local.layer_vars.locals.layer_name
 
   env = get_env("ENV", "dev")
 }
 
 inputs = {
-  resource_group_name = "${local.env}-rg-${trimspace(local.location)}"
+  resource_group_name = "${local.layer_name}${local.env}rg"
 }
