@@ -13,7 +13,7 @@ include {
   path = find_in_parent_folders()
 }
 
-dependency "network-resource-group" {
+dependency "subscription" {
   config_path                             = "../../../Network/resource-group"
 }
 
