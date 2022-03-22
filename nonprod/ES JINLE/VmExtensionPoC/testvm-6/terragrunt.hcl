@@ -3,26 +3,29 @@
 # This is the configuration for Terragrunt, a thin wrapper for Terraform that helps keep your code DRY and
 # maintainable: https://github.com/gruntwork-io/terragrunt
 # ---------------------------------------------------------------------------------------------------------------------
-
 terraform {
-  # source = "${local.module_repository}//key-vault?ref=${local.module_repository_version}"
-  source = "${local.module_repository}//service-principal?ref=${local.module_repository_version}"
+  source = "${local.module_repository}//Azure/windows-virtual-machine?ref=${local.module_repository_version}"
 }
 
+
+# Include the root `terragrunt.hcl` configuration. The root configuration contains settings that are common across all
+# components and environments, such as how to configure remote state.
 include {
-  path = find_in_parent_folders("layer.hcl")
+  path = find_in_parent_folders()
 }
+
 
 locals {
   common_vars               = read_terragrunt_config(find_in_parent_folders("common.hcl"))
   module_repository         = local.common_vars.locals.module_repository
-  module_repository_version = local.common_vars.locals.module_repository_version
+  module_repository_version ="main"
+  env_vars = read_terragrunt_config(find_in_parent_folders("${local.env}.hcl"))
 
-  layer_vars               = read_terragrunt_config(find_in_parent_folders("layer.hcl"))
-  app_name = local.layer_vars.locals.app_name
   env = get_env("ENV", "dev")
+  env_tags               = local.env_vars.locals.tags
 }
 
 inputs = {
-  display_name = "App1DemoSP"
+  name = "OptumTest6"
+  vm_name = "optumtestvm6"
 }

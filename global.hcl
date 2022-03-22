@@ -1,7 +1,8 @@
 # ---------------------------------------------------------------------------------------------------------------------
-# TERRAGRUNT CONFIGURATION
-# Terragrunt is a thin wrapper for Terraform that provides extra tools for working with multiple Terraform modules,
-# remote state, and locking: https://github.com/gruntwork-io/terragrunt
+# TERRAGRUNT GLOBAL CONFIGURATION
+# Used primarily to divert the current structure of using environment vars to configure backend key
+# Scenarios this is being used is to accommodate for resources that exist within a broader scope of
+#   an environment (e.g Subscriptions)
 # ---------------------------------------------------------------------------------------------------------------------
 
 # Define required variable files
@@ -31,13 +32,8 @@ locals {
   layer_vars = read_terragrunt_config(find_in_parent_folders("layer.hcl"))
 
 
-  # Extract the ENV value from the environment; default to dev
-  env      = get_env("ENV", "dev")
-  env_vars = read_terragrunt_config(find_in_parent_folders("${local.env}.hcl"))
-
   # Pull in Service Principal credentials from the environment
   client_secret = get_env("ARM_CLIENT_SECRET")
-  key = "${path_relative_to_include()}/${local.env}/terraform.tfstate"
 }
 
 # Generate an Azure provider block
@@ -53,20 +49,7 @@ EOF
 }
 
 # Configure Terragrunt to automatically store tfstate files in an Blob Storage container
-remote_state {
-  backend = "azurerm"
-  generate = {
-    path      = "backend.tf"
-    if_exists = "overwrite"
-  }
-  config = {
-    subscription_id      = local.backend_subscription_id
-    resource_group_name  = local.backend_storage_resource_group_name
-    storage_account_name = local.backend_storage_account_name
-    container_name       = "tfstate"
-    key                  = local.key
-  }
-}
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # GLOBAL PARAMETERS
@@ -78,7 +61,6 @@ remote_state {
 # where terraform_remote_state data sources are placed directly into the modules.
 inputs = merge(
   local.common_vars.locals,
-  local.env_vars.locals,
   local.layer_vars.locals,
   {
     client_secret = local.client_secret

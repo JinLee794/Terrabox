@@ -9,6 +9,3 @@ locals {
   module_repository         = "git::git@github.com:JinLee794/TerraBox-Modules.git"
   module_repository_version = "demo"
 }
-
-
-// https://raw.githubusercontent.com/JinLee794/TerraBox-Modules/main/key-vault/main.tf
