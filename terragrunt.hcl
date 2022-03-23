@@ -36,7 +36,7 @@ locals {
   env_vars = read_terragrunt_config(find_in_parent_folders("${local.env}.hcl"))
 
   # Pull in Service Principal credentials from the environment
-  client_secret = get_env("ARM_CLIENT_SECRET")
+  # client_secret = get_env("ARM_CLIENT_SECRET")
   key = "${path_relative_to_include()}/${local.env}/terraform.tfstate"
 }
 
@@ -79,8 +79,9 @@ remote_state {
 inputs = merge(
   local.common_vars.locals,
   local.env_vars.locals,
-  local.layer_vars.locals,
-  {
-    client_secret = local.client_secret
-  }
+  local.layer_vars.locals
+
+#   {
+#     client_secret = local.client_secret
+#   }
 )
