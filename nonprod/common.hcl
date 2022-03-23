@@ -6,6 +6,7 @@ locals {
   backend_storage_account_name        = "bootstrapsadev"
   backend_storage_resource_group_name = "bootstrap"
 
-  module_repository         = "git::git@github.com:JinLee794/TerraBox-Modules.git"
+  // module_repository         = "git::git@github.com:JinLee794/TerraBox-Modules.git"
+  module_repository         = "${get_parent_terragrunt_dir("terragrunt.hcl")}/../../TerraBox-Modules"
   module_repository_version = "demo"
 }
