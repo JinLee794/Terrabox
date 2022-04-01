@@ -1,7 +1,7 @@
 locals {
   location = "East US 2"
-  env = "poc"
-  
+  env      = "poc"
+
   tags = {
     "Requester" : "Jin Lee",
     "Organization" : "MS CSU",

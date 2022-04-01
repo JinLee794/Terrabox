@@ -1,3 +1,3 @@
 locals {
-    layer_name = "Network"
+  layer_name = "Network"
 }

@@ -34,5 +34,5 @@
 #   actions = [
 #       "*"
 #   ]
-#   not_actions = [] 
+#   not_actions = []
 # }

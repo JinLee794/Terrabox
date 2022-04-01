@@ -7,7 +7,7 @@ locals {
   backend_storage_resource_group_name = "bootstrap"
 
   module_repository         = "git::git@github.com:JinLee794/TerraBox-Modules.git"
-  module_repository_version = "demo"
+  module_repository_version = "alpha"
 }
 
 

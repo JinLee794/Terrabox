@@ -14,7 +14,7 @@ include {
 }
 
 dependency "network-resource-group" {
-  config_path                             = "../../../Network/resource-group"
+  config_path = "../../../Network/resource-group"
 }
 
 locals {
@@ -22,17 +22,17 @@ locals {
   module_repository         = local.common_vars.locals.module_repository
   module_repository_version = local.common_vars.locals.module_repository_version
 
-  layer_vars               = read_terragrunt_config(find_in_parent_folders("layer.hcl"))
-  app_name = local.layer_vars.locals.app_name
-  env = get_env("ENV", "dev")
+  layer_vars = read_terragrunt_config(find_in_parent_folders("layer.hcl"))
+  app_name   = local.layer_vars.locals.app_name
+  env        = get_env("ENV", "dev")
 }
 
 inputs = {
   display_name = "Network-${local.env}-Contributor"
-  scope_id = dependency.network-resource-group.outputs.id
+  scope_id     = dependency.network-resource-group.outputs.id
 
   actions = [
-      "*"
+    "*"
   ]
-  not_actions = [] 
+  not_actions = []
 }

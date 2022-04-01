@@ -1,5 +1,5 @@
 locals {
-  layer_name = "HubNetwork"
+  layer_name    = "HubNetwork"
   address_space = ["10.0.0.0/24"]
 
   subnets = {

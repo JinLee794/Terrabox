@@ -12,7 +12,7 @@ terraform {
 # Include configurations that are common used across multiple environments.
 # ---------------------------------------------------------------------------------------------------------------------
 dependency "resource-group" {
-  config_path                             = "../resource-group"
+  config_path = "../resource-group"
 }
 
 # Include the root `terragrunt.hcl` configuration. The root configuration contains settings that are common across all
@@ -29,12 +29,12 @@ locals {
 
   env_vars = read_terragrunt_config(find_in_parent_folders("${local.env}.hcl"))
 
-  env = get_env("ENV", "dev")
-  env_tags               = local.env_vars.locals.tags
+  env      = get_env("ENV", "dev")
+  env_tags = local.env_vars.locals.tags
 }
 
 inputs = {
-  vnet_name     = "${local.layer_name}-${local.env}-vnet"
+  vnet_name = "${local.layer_name}-${local.env}-vnet"
 
   resource_group_name = dependency.resource-group.outputs.name
   location            = dependency.resource-group.outputs.location

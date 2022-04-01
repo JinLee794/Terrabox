@@ -26,16 +26,16 @@ locals {
   module_repository         = local.common_vars.locals.module_repository
   module_repository_version = local.common_vars.locals.module_repository_version
 
-  layer_vars               = read_terragrunt_config(find_in_parent_folders("layer.hcl"))
+  layer_vars = read_terragrunt_config(find_in_parent_folders("layer.hcl"))
   layer_name = local.layer_vars.locals.layer_name
-  
-  env = get_env("ENV", "dev")
+
+  env      = get_env("ENV", "dev")
   env_vars = read_terragrunt_config(find_in_parent_folders("${local.env}.hcl"))
-  env_tags               = local.env_vars.locals.tags
+  env_tags = local.env_vars.locals.tags
 }
 
 inputs = {
-  key_vault_name = "${local.layer_name}${local.env}kv"
+  key_vault_name      = "${local.layer_name}${local.env}kv"
   resource_group_name = dependency.resource-group.outputs.name
   location            = dependency.resource-group.outputs.location
   tags = merge(

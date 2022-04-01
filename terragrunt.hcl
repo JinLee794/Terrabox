@@ -80,8 +80,4 @@ inputs = merge(
   local.common_vars.locals,
   local.env_vars.locals,
   local.layer_vars.locals
-
-#   {
-#     client_secret = local.client_secret
-#   }
 )

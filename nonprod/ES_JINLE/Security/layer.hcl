@@ -1,4 +1,4 @@
 locals {
-    layer_name = "Security"
-    app_name = "MyTGManagedApp"
+  layer_name = "Security"
+  app_name   = "MyTGManagedApp"
 }

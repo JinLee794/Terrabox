@@ -18,9 +18,9 @@ locals {
   module_repository         = local.common_vars.locals.module_repository
   module_repository_version = local.common_vars.locals.module_repository_version
 
-  layer_vars               = read_terragrunt_config(find_in_parent_folders("layer.hcl"))
-  app_name = local.layer_vars.locals.app_name
-  env = get_env("ENV", "dev")
+  layer_vars = read_terragrunt_config(find_in_parent_folders("layer.hcl"))
+  app_name   = local.layer_vars.locals.app_name
+  env        = get_env("ENV", "dev")
 }
 
 inputs = {

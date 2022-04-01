@@ -4,8 +4,8 @@
 # maintainable: https://github.com/gruntwork-io/terragrunt
 # ---------------------------------------------------------------------------------------------------------------------
 terraform {
-  # source = "${local.module_repository}//Azure/windows-virtual-machine?ref=${local.module_repository_version}"
-  source = "${local.module_repository}//Azure/linux-virtual-machine"
+  source = "${local.module_repository}//Azure/linux-virtual-machine?ref=${local.module_repository_version}"
+  // source = "${local.module_repository}//Azure/linux-virtual-machine"
 }
 
 
@@ -20,33 +20,34 @@ locals {
   common_vars               = read_terragrunt_config(find_in_parent_folders("common.hcl"))
   module_repository         = local.common_vars.locals.module_repository
   module_repository_version = local.common_vars.locals.module_repository_version
-  env_vars = read_terragrunt_config(find_in_parent_folders("${local.env}.hcl"))
+  env_vars                  = read_terragrunt_config(find_in_parent_folders("${local.env}.hcl"))
 
   layer_vars = read_terragrunt_config(find_in_parent_folders("layer.hcl"))
 
-  env = get_env("ENV", "dev")
-  env_tags               = local.env_vars.locals.tags
+  env      = get_env("ENV", "dev")
+  env_tags = local.env_vars.locals.tags
 }
 
 inputs = {
-  name = "OpinionatedVM"
+  name    = "OpinionatedVM"
   vm_name = "optumtestvm1"
-  
+
   # Vars to avoid hardcoded secrets
-  key_vault_name = local.layer_vars.locals.law_key_vault_name
+  key_vault_name                = local.layer_vars.locals.law_key_vault_name
   key_vault_resource_group_name = local.layer_vars.locals.law_key_vault_resource_group_name
-  ssh_public_key_name = "aks-dev-ssh-public-key"
+  ssh_public_key_name           = "aks-dev-ssh-public-key"
 
   # Vars with validation
   size = "Standard_Dsv3"
-  // env = "thiswillerror"
   tags = {
-    BusinessUnit = "CoreIT"
-    OperationsTeam     = "MyOpsTeam@contoso.com"
-    BusinessCriticality       = "Low"
-    DataClassification   = "Public"
-    WorkloadName = "TerraformOpinionatedVM"
+    BusinessUnit        = "CoreIT"
+    OperationsTeam      = "MyOpsTeam@contoso.com"
+    BusinessCriticality = "Low"
+    DataClassification  = "Public"
+    WorkloadName        = "TerraformOpinionatedVM"
   }
+  // env = "thiswillerror" // This should cause an error
+
 
   # To get a list of marketplace images: $ az vm image list --output table
   source_image_reference = {
